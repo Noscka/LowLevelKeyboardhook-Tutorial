@@ -23,7 +23,8 @@ LRESULT CALLBACK HookCallback(int nCode, WPARAM wParam, LPARAM lParam)
 
         switch (wParam)
         {
-        case WM_KEYUP:
+#if defined BLOCK
+        case WM_KEYDOWN:
             if (UnicodeCharacter[0] == 'j')
             {
                 printf("J was pressed and blocked \n");
@@ -34,6 +35,16 @@ LRESULT CALLBACK HookCallback(int nCode, WPARAM wParam, LPARAM lParam)
                 std::cout << (char)UnicodeCharacter[0] << " pressed Down" << std::endl;
             }
             break;
+#else
+        case WM_KEYDOWN:
+            std::cout << (char)UnicodeCharacter[0] << " pressed Down" << std::endl;
+            break;
+
+        case WM_KEYUP:
+            std::cout << (char)UnicodeCharacter[0] << " pressed up" << std::endl;
+            break;
+#endif
+        
         }
     }
 
